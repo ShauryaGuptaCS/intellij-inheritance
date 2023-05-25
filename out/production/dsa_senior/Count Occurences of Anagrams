@@ -1,0 +1,30 @@
+class Solution {
+
+    int search(String pat, String txt) {
+        // code here
+  int CHARACTERS = 256;
+        int sn = txt.length();
+        int pn = pat.length();
+        int count = 0;
+        if (sn < 0 || pn < 0 || sn < pn)
+            return 0;
+
+        char[] pArr = new char[CHARACTERS];
+        char[] sArr = new char[CHARACTERS];
+        int i = 0;
+        for (; i < pn; i++) {
+            sArr[CHARACTERS - txt.charAt(i)]++;
+            pArr[CHARACTERS - pat.charAt(i)]++;
+        }
+        if (Arrays.equals(pArr, sArr))
+            count += 1;
+        for (; i < sn; i++) {
+            sArr[CHARACTERS - txt.charAt(i)]++;
+            sArr[CHARACTERS - txt.charAt(i - pn)]--;
+
+            if (Arrays.equals(pArr, sArr))
+                count += 1;
+        }
+        return count;
+    }
+    }
